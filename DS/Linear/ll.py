@@ -50,17 +50,36 @@ class LinkedList:
         """len function for the list"""
         return self.count()
     
+    def __contains__(self, val):
+        """magic method for `in` keywod"""
+        trav = self.head
+        while trav:
+            if trav.val == val:
+                return True
+            trav = trav.nxt
+        return False
+
+    def __iter__(self):
+        node = self.head
+        while node is not None:
+            yield node
+            node = node.nxt
+
     def __str__(self):
         """User-friendly output"""
         trav, nodes = self.head, []
         while trav:
-            nodes.append(str(trav.val))
+            nodes.append(f'Node({trav.val})')
             trav = trav.nxt
         return ' -> '.join(nodes)
-
+    
 head = LinkedList(Node(10))
 head.append(Node(20))
 head.append(Node(30, Node(40)))
 head.prepend(Node(0))
-print(head.count())
+print(10 in head)
 print(head[0])
+i = 0
+print(head)
+for node in head:
+    print(node)
