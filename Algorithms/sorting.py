@@ -24,6 +24,46 @@ def insertion(lst, k=1):
             i -= 1
     return lst
 
+############################################ Shellsort ############################################
+def shellsort(lst):
+    '''
+    Variation of insertion sort
+    '''
+    n = len(lst)
+    # Sort an array a[0...n-1].
+    # gaps = [701, 301, 132, 57, 23, 10, 4, 1]  # Ciura gap sequence
+    gaps = [i// 2 for i in range(n, 0, -n//2+1)]
+
+    # Start with the largest gap and work down to a gap of 1
+    # similar to insertion sort but instead of 1, gap is being used in each step
+    for gap in gaps:
+        # Do a gapped insertion sort for every elements in gaps
+        # Each loop leaves a[0..gap-1] in gapped order
+        lst = insertion(lst, gap)
+    return lst
+
+############################################ Exchange Sort ############################################
+def exchange_sort(lst):
+    for i in range(len(lst)-1):
+        for j in range(i+1, len(lst)):
+            if lst[j] < lst[i]:
+                lst[i], lst[j] = lst[j], lst[i]
+    return lst
+
+############################################ Gnome Sort ############################################
+def gnome_sort(lst):
+    i = 0
+    while i < len(lst):
+        if i == 0 or lst[i] >= lst[i-1]:
+            i += 1
+        else:
+            lst[i], lst[i-1] = lst[i-1], lst[i]
+            i -= 1
+    return lst
+            
+############################################ Heap Sort ############################################
+def heapsort(lst):
+    pass
 
 ############################################ Merge Sort ############################################
 def partition(lst):
@@ -52,35 +92,26 @@ def merge(lst1, lst2):
 import random
 def quicksort(lst):
     if len(lst) > 1:
-        pivot = lst[random.randrange(len(lst))]
-        return quicksort([*filter(lambda x: x < pivot, lst)]) + [pivot] * lst.count(pivot) + quicksort([*filter(lambda x: x > pivot, lst)])
+        pivot = random.choice(lst)
+        return quicksort([x for x in lst if x < pivot]) + [x for x in lst if x == pivot] + quicksort([x for x in lst if x > pivot])
     return lst
 
-############################################ Shellsort ############################################
-def shellsort(lst):
-    '''
-    Variation of insertion sort
-    '''
-    n = len(lst)
-    # Sort an array a[0...n-1].
-    # gaps = [701, 301, 132, 57, 23, 10, 4, 1]  # Ciura gap sequence
-    gaps = [i// 2 for i in range(n, 0, -n//2+1)]
+############################################ Introsort ############################################
 
-    # Start with the largest gap and work down to a gap of 1
-    # similar to insertion sort but instead of 1, gap is being used in each step
-    for gap in gaps:
-        # Do a gapped insertion sort for every elements in gaps
-        # Each loop leaves a[0..gap-1] in gapped order
-        lst = insertion(lst, gap)
-    return lst
+############################################ Timsort ############################################
 
+############################################ Block Sort ############################################
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 if __name__ == '__main__':
     lst = [1, 2, 5, 6, 0, 3, 6, 4, 10, -9]
 
+    print('Selection sort\t', selection(lst.copy()))
     print('Bubble sort\t', bubble(lst.copy()))
     print('Insertion sort\t', insertion(lst.copy()))
+    print('Shell sort\t', shellsort(lst.copy()))
+    print('Exchange sort\t', exchange_sort(lst.copy()))
+    print('Gnome sort\t', gnome_sort(lst.copy()))
+    print('Heap sort\t', heapsort(lst.copy()))
     print('Merge sort\t', merge_sort(lst.copy()))
-    print('Quicksort\t', quicksort(lst.copy()))
-    print('Shellsort\t', shellsort(lst.copy()))
-    print('Selection sort\t', selection(lst.copy()))
+    print('Quick sort\t', quicksort(lst.copy()))
+
