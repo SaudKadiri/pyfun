@@ -24,7 +24,7 @@ def insertion(lst, k=1):
             i -= 1
     return lst
 
-############################################ Shellsort ############################################
+############################################ Shell sort ############################################
 def shellsort(lst):
     '''
     Variation of insertion sort
@@ -60,7 +60,23 @@ def gnome_sort(lst):
             lst[i], lst[i-1] = lst[i-1], lst[i]
             i -= 1
     return lst
-            
+
+############################################ Even-odd Sort ############################################
+def even_odd(lst):
+    even_range, odd_range = range(0, len(lst)-1, 2), range(1, len(lst)-1, 2)
+    is_sorted = False
+    while not is_sorted:
+        is_sorted = True
+        for i in even_range:
+            if lst[i] > lst[i+1]:
+                lst[i], lst[i+1] = lst[i+1], lst[i]
+                is_sorted = False
+        for i in odd_range:
+            if lst[i] > lst[i+1]:
+                lst[i], lst[i+1] = lst[i+1], lst[i]
+                is_sorted = False
+    return lst
+
 ############################################ Heap Sort ############################################
 def heapsort(lst):
     pass
@@ -101,6 +117,7 @@ def quicksort(lst):
 ############################################ Timsort ############################################
 
 ############################################ Block Sort ############################################
+
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 if __name__ == '__main__':
     lst = [1, 2, 5, 6, 0, 3, 6, 4, 10, -9]
@@ -111,7 +128,7 @@ if __name__ == '__main__':
     print('Shell sort\t', shellsort(lst.copy()))
     print('Exchange sort\t', exchange_sort(lst.copy()))
     print('Gnome sort\t', gnome_sort(lst.copy()))
+    print('Even-odd sort\t', even_odd(lst.copy()))
     print('Heap sort\t', heapsort(lst.copy()))
     print('Merge sort\t', merge_sort(lst.copy()))
     print('Quick sort\t', quicksort(lst.copy()))
-
