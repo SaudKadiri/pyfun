@@ -1,3 +1,13 @@
+############################################ Selection Sort ############################################
+def selection(lst):
+    for i in range(len(lst)):
+        mini = i
+        for j in range(i, len(lst)):
+            if lst[j] < lst[mini]:
+                mini = j
+        lst[i], lst[mini] = lst[mini], lst[i]
+    return lst
+
 ############################################ Bubble Sort ############################################
 def bubble(lst):
     for i in range(len(lst)):
@@ -73,3 +83,4 @@ if __name__ == '__main__':
     print('Merge sort\t', merge_sort(lst.copy()))
     print('Quicksort\t', quicksort(lst.copy()))
     print('Shellsort\t', shellsort(lst.copy()))
+    print('Selection sort\t', selection(lst.copy()))
