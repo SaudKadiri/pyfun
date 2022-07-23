@@ -1,5 +1,3 @@
-import random
-
 ############################################ Bubble Sort ############################################
 def bubble(lst):
     for i in range(len(lst)):
@@ -9,12 +7,11 @@ def bubble(lst):
     return lst
 
 ############################################ Insertion Sort ############################################
-def insertion(lst):
+def insertion(lst, k=1):
     for i in range(1, len(lst)):
-        j = i
-        while j > 0 and lst[j-1] > lst[j]:
-            lst[j-1], lst[j] = lst[j], lst[j-1]
-            j -= 1
+        while i > 0 and lst[i-k] > lst[i]:
+            lst[i-k], lst[i] = lst[i], lst[i-k]
+            i -= 1
     return lst
 
 
@@ -42,16 +39,37 @@ def merge(lst1, lst2):
     return res
 
 ############################################ Quicksort ############################################
+import random
 def quicksort(lst):
     if len(lst) > 1:
         pivot = lst[random.randrange(len(lst))]
         return quicksort([*filter(lambda x: x < pivot, lst)]) + [pivot] * lst.count(pivot) + quicksort([*filter(lambda x: x > pivot, lst)])
     return lst
 
+############################################ Shellsort ############################################
+def shellsort(lst):
+    '''
+    Variation of insertion sort
+    '''
+    n = len(lst)
+    # Sort an array a[0...n-1].
+    # gaps = [701, 301, 132, 57, 23, 10, 4, 1]  # Ciura gap sequence
+    gaps = [i// 2 for i in range(n, 0, -n//2+1)]
+
+    # Start with the largest gap and work down to a gap of 1
+    # similar to insertion sort but instead of 1, gap is being used in each step
+    for gap in gaps:
+        # Do a gapped insertion sort for every elements in gaps
+        # Each loop leaves a[0..gap-1] in gapped order
+        lst = insertion(lst, gap)
+    return lst
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 if __name__ == '__main__':
     lst = [1, 2, 5, 6, 0, 3, 6, 4, 10, -9]
 
-    print('Bubble sort\t', bubble(lst))
-    print('Insertion sort\t', insertion(lst))
-    print('Merge sort\t', merge_sort(lst))
-    print('Quicksort\t', quicksort(lst))
+    print('Bubble sort\t', bubble(lst.copy()))
+    print('Insertion sort\t', insertion(lst.copy()))
+    print('Merge sort\t', merge_sort(lst.copy()))
+    print('Quicksort\t', quicksort(lst.copy()))
+    print('Shellsort\t', shellsort(lst.copy()))
