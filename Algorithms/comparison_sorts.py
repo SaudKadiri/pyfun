@@ -1,5 +1,6 @@
+
 ############################################ Selection Sort ############################################
-def selection(lst):
+def selection_sort(lst):
     for i in range(len(lst)):
         mini = i
         for j in range(i, len(lst)):
@@ -9,7 +10,7 @@ def selection(lst):
     return lst
 
 ############################################ Bubble Sort ############################################
-def bubble(lst):
+def bubble_sort(lst):
     for i in range(len(lst)):
         for j in range(len(lst)-i-1):
             if lst[j] > lst[j+1]:
@@ -17,7 +18,7 @@ def bubble(lst):
     return lst
 
 ############################################ Insertion Sort ############################################
-def insertion(lst, k=1):
+def insertion_sort(lst, k=1):
     for i in range(1, len(lst)):
         while i > 0 and lst[i-k] > lst[i]:
             lst[i-k], lst[i] = lst[i], lst[i-k]
@@ -39,7 +40,7 @@ def shellsort(lst):
     for gap in gaps:
         # Do a gapped insertion sort for every elements in gaps
         # Each loop leaves a[0..gap-1] in gapped order
-        lst = insertion(lst, gap)
+        lst = insertion_sort(lst, gap)
     return lst
 
 ############################################ Exchange Sort ############################################
@@ -61,17 +62,17 @@ def gnome_sort(lst):
             i -= 1
     return lst
 
-############################################ Even-odd Sort ############################################
-def even_odd(lst):
-    even_range, odd_range = range(0, len(lst)-1, 2), range(1, len(lst)-1, 2)
+############################################ Odd-even Sort ############################################
+def odd_even_sort(lst):
+    odd_range, even_range = range(1, len(lst)-1, 2), range(0, len(lst)-1, 2)
     is_sorted = False
     while not is_sorted:
         is_sorted = True
-        for i in even_range:
+        for i in odd_range:
             if lst[i] > lst[i+1]:
                 lst[i], lst[i+1] = lst[i+1], lst[i]
                 is_sorted = False
-        for i in odd_range:
+        for i in even_range:
             if lst[i] > lst[i+1]:
                 lst[i], lst[i+1] = lst[i+1], lst[i]
                 is_sorted = False
@@ -138,7 +139,42 @@ def quicksort(lst):
     return lst
 
 ############################################ Introsort ############################################
+def median_of_three_killer_sequence(lst):
+    mid, last = len(lst)//2, len(lst)-1
+    if lst[0] > lst[last]:
+        lst[0], lst[last] = lst[last], lst[0]
+    if lst[last] > lst[mid]:
+        lst[mid], lst[last] = lst[last], lst[mid]
+    if lst[0] > lst[last]:
+        lst[0], lst[last] = lst[last], lst[0]
+    pivot = lst[last]
+    i, j = 0, last;
+    while True:
+        i += 1
+        while lst[i] < pivot: i += 1
+        j -= 1
+        while lst[j] > pivot: j -= 1
+        if i >= j:
+            break
+        lst[i], lst[j] = lst[j], lst[i]
 
+    lst[i], lst[last] = lst[last], lst[i]
+    return i;
+
+def introsort(lst):
+    def intro(lst, maxdepth):
+        n = len(lst)
+        if n < 16:
+            lst = insertion_sort(lst)
+        elif maxdepth == 0:
+            lst = heapsort(lst)
+        else:
+            p = median_of_three_killer_sequence(lst)  # assume this function does pivot selection, p is the final position of the pivot
+            lst[:p] = intro(lst[:p], maxdepth - 1)
+            lst[p:] = intro(lst[p:], maxdepth - 1)
+        return lst
+    maxdepth = 2 * (len(lst).bit_length() - 1)
+    return intro(lst, maxdepth)
 ############################################ Timsort ############################################
 
 ############################################ Block Sort ############################################
