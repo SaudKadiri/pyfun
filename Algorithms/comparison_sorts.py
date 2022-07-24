@@ -78,8 +78,33 @@ def even_odd(lst):
     return lst
 
 ############################################ Heap Sort ############################################
+def max_heapify(heap, heap_size, parent):
+    left = 2*parent
+    right = 2*parent + 1
+    largest = parent
+    if left < heap_size and heap[left] > heap[largest]:
+        largest = left
+    if right < heap_size and heap[right] > heap[largest]:
+        largest = right
+    if largest != parent:
+        heap[parent], heap[largest] = heap[largest], heap[parent]
+        max_heapify(heap, heap_size, largest)
+
+def build_max_heap(lst):
+    heap_size = len(lst)
+
+    for i in range (heap_size//2, -1, -1):
+        max_heapify(lst,heap_size, i)
+    return lst  # lst is a heap representation now
+
 def heapsort(lst):
-    pass
+    heap_size = len(lst)
+    heap = build_max_heap(lst)
+    for i in range(heap_size-1, 0, -1):
+        heap[0], heap[i] = heap[i], heap[0]
+        heap_size -= 1
+        max_heapify(heap, heap_size, 0)
+    return heap # which is a sorted representation of lst now
 
 ############################################ Merge Sort ############################################
 def partition(lst):
@@ -117,18 +142,3 @@ def quicksort(lst):
 ############################################ Timsort ############################################
 
 ############################################ Block Sort ############################################
-
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-if __name__ == '__main__':
-    lst = [1, 2, 5, 6, 0, 3, 6, 4, 10, -9]
-
-    print('Selection sort\t', selection(lst.copy()))
-    print('Bubble sort\t', bubble(lst.copy()))
-    print('Insertion sort\t', insertion(lst.copy()))
-    print('Shell sort\t', shellsort(lst.copy()))
-    print('Exchange sort\t', exchange_sort(lst.copy()))
-    print('Gnome sort\t', gnome_sort(lst.copy()))
-    print('Even-odd sort\t', even_odd(lst.copy()))
-    print('Heap sort\t', heapsort(lst.copy()))
-    print('Merge sort\t', merge_sort(lst.copy()))
-    print('Quick sort\t', quicksort(lst.copy()))
