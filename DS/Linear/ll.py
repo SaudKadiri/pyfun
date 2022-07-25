@@ -13,17 +13,37 @@ class LinkedList:
     def __init__(self, head=None):
         self.head = head
 
-    def append(self, node):
+    def append(self, item):
         """For appending (i.e. insert at the right-most end of) the linked list"""
         trav = self.head
         while trav and trav.nxt:
             trav = trav.nxt
-        trav.nxt = node
+        trav.nxt = item if type(item) is Node else Node(item)
     
-    def prepend(self, node):
+    def prepend(self, item):
         """For prepending (i.e. insert at the left-most end of) the linked list"""
+        node = item if type(item) is Node else Node(item)
         node.nxt = self.head
         self.head = node
+
+    def popleft(self):
+        """Removes an item from the front-end (left most); basically the root/head node"""
+        self.head = self.head.nxt if self.head else None
+
+    def pop(self):
+        """Removes the last node from the list"""
+        if not self.head or not self.head.nxt:
+            self.head = None
+        else:
+            trav = self.head
+            while trav and trav.nxt and trav.nxt.nxt:
+                trav = trav.nxt
+            trav.nxt = None
+
+    def popright(self):
+        """alias for pop()"""
+        self.pop()
+    
 
     def at(self, n):
         """Ordinal Traversal"""
@@ -74,12 +94,18 @@ class LinkedList:
         return ' -> '.join(nodes)
     
 head = LinkedList(Node(10))
-head.append(Node(20))
+head.append(2)
 head.append(Node(30, Node(40)))
 head.prepend(Node(0))
-print(10 in head)
+print(20 in head)
 print(head[0])
 i = 0
 print(head)
+for node in head:
+    print(node)
+
+head.popleft()
+head.pop()
+print('After pop')
 for node in head:
     print(node)
