@@ -78,6 +78,25 @@ def odd_even_sort(lst):
                 is_sorted = False
     return lst
 
+############################################ Cocktail Shaker Sort ############################################
+def cocktail_sort(lst):
+    while True:
+        swapped = False
+        for i in range(0, len(lst)-1):
+            if lst[i] > lst[i+1]: # test whether the two elements are in the wrong order
+                lst[i], lst[i+1] = lst[i+1], lst[i] # let the two elements change places
+                swapped = True
+        if not swapped:
+            break
+        swapped = False
+        for i in range(len(lst)-2, -1, -1):
+            if lst[i] > lst[i+1]:
+                lst[i], lst[i+1] = lst[i+1], lst[i]
+                swapped = True
+        if not swapped:
+            break
+    return lst
+
 ############################################ Heap Sort ############################################
 def max_heapify(heap, heap_size, parent):
     left = 2*parent
