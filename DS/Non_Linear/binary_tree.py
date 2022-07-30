@@ -1,3 +1,4 @@
+from queue import deque
 class Node:
   def __init__(self, val=0, left=None, right=None):
     """Initializes the vals and nxt"""
