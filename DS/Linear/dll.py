@@ -54,6 +54,16 @@ class DoublyLinkedList:
         else:
             self.insert_before(self.head, node)
 
+    def remove_left(self):
+        if self.head is not None:
+            self.head = self.head.nxt
+            self.head.pre = None
+    
+    def remove_right(self):
+        if self.tail is not None:
+            self.tail = self.tail.pre
+            self.tail.nxt = None
+
     def __str__(self):
         """User-friendly output"""
         trav, nodes = self.head, []
@@ -69,6 +79,8 @@ class DoublyLinkedList:
         rtol = ' ⇄ '.join(nodes[::-1])
         return f'left to right: {ltor}\nright to left: {rtol}'
 
+    
+
 if __name__ == '__main__':
     dll = DoublyLinkedList()
     dll.prepend(10)
@@ -78,4 +90,7 @@ if __name__ == '__main__':
     dll.prepend(90)
     dll.prepend(100)
     dll.prepend(1110)
+    print(dll)
+    dll.remove_left()
+    dll.remove_right()
     print(dll)
