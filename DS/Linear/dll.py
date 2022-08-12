@@ -64,6 +64,16 @@ class DoublyLinkedList:
             self.tail = self.tail.pre
             self.tail.nxt = None
 
+    def __getitem__(self, n):
+        """Indices for the list"""
+        if n >= 0:
+            trav = self.head
+            while n > 0 and trav: trav = trav.nxt; n -= 1 
+        else:
+            trav = self.tail
+            while n != -1 and trav: trav = trav.pre; n += 1 
+        return trav
+    
     def __str__(self):
         """User-friendly output"""
         trav, nodes = self.head, []
@@ -94,3 +104,4 @@ if __name__ == '__main__':
     dll.remove_left()
     dll.remove_right()
     print(dll)
+    print(dll[0], dll[-1])
